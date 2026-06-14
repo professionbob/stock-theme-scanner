@@ -1,0 +1,383 @@
+# =========================
+# Stock Theme Scanner Config
+# =========================
+# 這份設定檔是核心：你可以自行增減主題、標的、門檻。
+
+runtime:
+  timezone: Asia/Taipei
+  market: all               # all / TW / US
+  mode: once                # once / loop
+  scan_interval_seconds: 300
+  # 全股票池列出排名前 10 名；但只特別標示前 3 名為推薦候選。
+  top_pool_count: 10
+  recommended_count: 3
+  # 舊版參數保留，避免舊程式引用失敗。新版報告主要使用上面兩個參數。
+  recommended_count_per_market: 3
+  max_candidates_per_market: 3
+  output_dir: reports
+  enable_telegram: true
+  enable_console: true
+
+risk:
+  max_single_position_pct: 15
+  s_position_pct: [10, 15]
+  a_position_pct: [5, 10]
+  b_position_pct: [3, 5]
+  watch_position_pct: [0, 0]
+  min_rr_to_recommend: 1.8
+  prefer_rr: 2.0
+  max_atr_pct: 8.0
+  max_rsi_to_enter: 74
+  overextended_from_ema20_pct: 8.0
+  min_price_usd: 2.0
+  min_avg_volume_us: 500000
+  min_avg_turnover_usd: 5000000
+  min_avg_volume_tw: 500000
+  min_avg_turnover_twd: 30000000
+
+benchmarks:
+  US: QQQ
+  TW: ^TWII
+
+# 你有實際持股時，直接填在這裡，scanner 會每天檢查停損/目標/是否減碼。
+portfolio:
+  - ticker: ONDS
+    market: US
+    shares: 300
+    avg_cost: 9.08
+    stop: 9.03
+    target1: 10.23
+    target2: 10.98
+    theme: space
+  # - ticker: 2330.TW
+  #   market: TW
+  #   shares: 0
+  #   avg_cost: 0
+  #   stop: 0
+  #   target1: 0
+  #   target2: 0
+  #   theme: ai_infra
+
+# 主題權重：越符合你想追的主線，分數越高。
+theme_weights:
+  ai_infra: 1.25
+  cooling: 1.20
+  storage: 1.15
+  cleanroom: 1.10
+  glass_substrate: 1.10
+  advanced_packaging: 1.25
+  space: 1.10
+  robotics: 1.05
+  ai_applications: 1.05
+  power: 1.20
+
+# 新聞關鍵字，用於 yfinance news / Finnhub news 的簡易催化劑判讀。
+catalyst_keywords:
+  - ai
+  - artificial intelligence
+  - data center
+  - datacenter
+  - cloud
+  - gpu
+  - server
+  - hbm
+  - memory
+  - cpo
+  - co-packaged optics
+  - optical
+  - photonics
+  - advanced packaging
+  - cowos
+  - glass substrate
+  - tgv
+  - lidar
+  - robotics
+  - humanoid
+  - automation
+  - satellite
+  - space
+  - defense
+  - drone
+  - power grid
+  - nuclear
+  - energy
+  - cooling
+  - liquid cooling
+  - cleanroom
+  - foundry
+  - semiconductor
+  - capex
+  - guidance
+  - earnings beat
+  - contract
+  - order
+  - partnership
+
+# 主要股票池：不是保證「全球全部」，但已把你指定主題的核心標的先放入。
+# 你可直接新增任何 ticker，TW 請用 .TW / .TWO，美股直接用 ticker。
+universe:
+  US:
+    ai_infra:
+      - NVDA
+      - AMD
+      - AVGO
+      - MRVL
+      - ANET
+      - DELL
+      - SMCI
+      - HPE
+      - VRT
+      - ETN
+      - PWR
+      - CLS
+      - FLEX
+      - JBL
+      - TSM
+      - ASX
+      - AMAT
+      - LRCX
+      - KLAC
+      - IREN
+      - CORZ
+      - NBIS
+    cooling:
+      - VRT
+      - ETN
+      - TT
+      - CARR
+      - MOD
+      - JCI
+      - SMCI
+      - DELL
+      - PWR
+      - FIX
+    storage:
+      - MU
+      - WDC
+      - STX
+      - SNDK
+      - RMBS
+      - SIMO
+      - MCHP
+      - MRVL
+      - LRCX
+      - AMAT
+      - KLAC
+    cleanroom:
+      - AMAT
+      - LRCX
+      - KLAC
+      - ENTG
+      - ICHR
+      - ACMR
+      - AEHR
+      - PWR
+      - EME
+      - FIX
+    glass_substrate:
+      - GLW
+      - COHR
+      - LITE
+      - IPGP
+      - AMAT
+      - LRCX
+      - TER
+      - MKSI
+      - ONTO
+    advanced_packaging:
+      - TSM
+      - ASX
+      - AMKR
+      - UMC
+      - AMAT
+      - LRCX
+      - KLAC
+      - TER
+      - ONTO
+      - AEHR
+      - COHU
+      - RMBS
+    space:
+      - RKLB
+      - LUNR
+      - RDW
+      - PL
+      - SPIR
+      - SATL
+      - ASTS
+      - IRDM
+      - GSAT
+      - LMT
+      - NOC
+      - RTX
+      - BA
+      - HON
+      - ONDS
+    robotics:
+      - ISRG
+      - TER
+      - SYM
+      - ROK
+      - CGNX
+      - ZBRA
+      - HON
+      - PATH
+      - ABBNY
+      - BBAI
+      - SERV
+      - RR
+    ai_applications:
+      - MSFT
+      - GOOGL
+      - META
+      - AMZN
+      - CRM
+      - NOW
+      - PLTR
+      - DDOG
+      - CRWD
+      - SNOW
+      - MDB
+      - APP
+      - UBER
+      - RDDT
+      - CFLT
+      - NET
+      - AI
+    power:
+      - CEG
+      - VST
+      - NRG
+      - GEV
+      - ETN
+      - PWR
+      - CCJ
+      - BWXT
+      - OKLO
+      - NNE
+      - SMR
+      - BE
+      - FLNC
+      - ENPH
+      - NXT
+      - FSLR
+  TW:
+    ai_infra:
+      - 2330.TW   # 台積電
+      - 2317.TW   # 鴻海
+      - 2382.TW   # 廣達
+      - 3231.TW   # 緯創
+      - 6669.TW   # 緯穎
+      - 2356.TW   # 英業達
+      - 2376.TW   # 技嘉
+      - 3706.TW   # 神達
+      - 2324.TW   # 仁寶
+      - 2357.TW   # 華碩
+      - 2395.TW   # 研華
+      - 2454.TW   # 聯發科
+      - 3443.TW   # 創意
+      - 3661.TW   # 世芯-KY
+      - 3035.TW   # 智原
+    cooling:
+      - 3017.TW   # 奇鋐
+      - 3324.TW   # 雙鴻
+      - 3653.TW   # 健策
+      - 8996.TW   # 高力
+      - 2421.TW   # 建準
+      - 3483.TW   # 力致
+      - 2308.TW   # 台達電
+      - 3533.TW   # 嘉澤
+      - 6213.TW   # 聯茂
+    storage:
+      - 2344.TW   # 華邦電
+      - 2408.TW   # 南亞科
+      - 2337.TW   # 旺宏
+      - 8299.TWO  # 群聯
+      - 6239.TW   # 力成
+      - 3260.TWO  # 威剛
+      - 2451.TW   # 創見
+      - 5289.TWO  # 宜鼎
+    cleanroom:
+      - 2404.TW   # 漢唐
+      - 6196.TW   # 帆宣
+      - 5536.TW   # 聖暉*
+      - 6139.TW   # 亞翔
+      - 6667.TWO  # 信紘科
+      - 6691.TW   # 洋基工程
+      - 3583.TW   # 辛耘
+      - 3131.TWO  # 弘塑
+      - 5443.TWO  # 均豪
+      - 2467.TW   # 志聖
+      - 6187.TWO  # 萬潤
+      - 6640.TWO  # 均華
+    glass_substrate:
+      - 1802.TW   # 台玻
+      - 1810.TW   # 和成
+      - 2409.TW   # 友達
+      - 3481.TW   # 群創
+      - 2467.TW   # 志聖
+      - 6187.TWO  # 萬潤
+      - 5443.TWO  # 均豪
+      - 6640.TWO  # 均華
+      - 3131.TWO  # 弘塑
+      - 6274.TW   # 台燿
+      - 4958.TW   # 臻鼎-KY
+    advanced_packaging:
+      - 2330.TW   # 台積電
+      - 3711.TW   # 日月光投控
+      - 2449.TW   # 京元電子
+      - 2311.TW   # 日月光
+      - 6271.TW   # 同欣電
+      - 6510.TW   # 精測
+      - 3131.TWO  # 弘塑
+      - 3583.TW   # 辛耘
+      - 6187.TWO  # 萬潤
+      - 5443.TWO  # 均豪
+      - 6640.TWO  # 均華
+      - 3037.TW   # 欣興
+      - 3189.TW   # 景碩
+      - 8046.TW   # 南電
+      - 2368.TW   # 金像電
+      - 4958.TW   # 臻鼎-KY
+      - 6274.TW   # 台燿
+    space:
+      - 2317.TW   # 鴻海
+      - 2357.TW   # 華碩
+      - 3450.TW   # 聯鈞
+      - 4977.TWO  # 眾達-KY
+      - 6285.TW   # 啟碁
+      - 3596.TW   # 智易
+      - 4906.TW   # 正文
+      - 5388.TWO  # 中磊
+    robotics:
+      - 2049.TW   # 上銀
+      - 1590.TW   # 亞德客-KY
+      - 4576.TW   # 大銀微系統
+      - 2359.TW   # 所羅門
+      - 2464.TW   # 盟立
+      - 4540.TWO  # 全球傳動
+      - 2395.TW   # 研華
+      - 2308.TW   # 台達電
+      - 1582.TW   # 信錦
+    ai_applications:
+      - 2454.TW   # 聯發科
+      - 3661.TW   # 世芯-KY
+      - 3443.TW   # 創意
+      - 3035.TW   # 智原
+      - 2388.TW   # 威盛
+      - 2395.TW   # 研華
+      - 3022.TW   # 威強電
+      - 3227.TWO  # 原相
+      - 2379.TW   # 瑞昱
+      - 6231.TWO  # 系微
+    power:
+      - 2308.TW   # 台達電
+      - 1513.TW   # 中興電
+      - 1503.TW   # 士電
+      - 1514.TW   # 亞力
+      - 1609.TW   # 大亞
+      - 1612.TW   # 宏泰
+      - 6806.TW   # 森崴能源
+      - 9958.TW   # 世紀鋼
+      - 3708.TW   # 上緯投控
+      - 1519.TW   # 華城
